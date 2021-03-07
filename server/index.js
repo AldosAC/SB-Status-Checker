@@ -1,6 +1,8 @@
 const express = require('express');
 const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
 const morgan = require('morgan');
+const config = require('../config.js');
+const send = require('gmail-send')(config);
 
 const app = express();
 const PORT = 3000;
@@ -13,6 +15,22 @@ let requestURL = testURL;
 let status = 'ONLINE';
 
 app.use(morgan('dev'));
+
+const sendAlert = (status) => {
+  let subject = `SB Update: Servers are ${status}`;
+
+  send({
+    to: 'aldosac@gmail.com',
+    subject,
+    text: `Brought to you by SB Status Checker`
+  })
+    .then(({ result }) => {
+      console.log(`Update notification success: ${result}`)
+    })
+    .catch((err) => {
+      console.log(`Update notification fail: ${err}`)
+    })
+}
 
 const toggleStatus = (status, currStatus) => {
   if (status !== currStatus) {
@@ -35,14 +53,6 @@ const queueRequest = (timeout) => {
       })
   }, timeout)
 }
-
-//Ping login server on loop
-  // If timeout
-    // invoke toggleStatus
-    // wait 5 seconds and try again.
-  // If successfull
-    // invoke toggleStatus.
-    // wait 30 seconds and try again.
 
 queueRequest(5000);
 
