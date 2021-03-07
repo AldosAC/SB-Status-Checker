@@ -1,9 +1,14 @@
 const express = require('express');
-const axios = require('axios').create({ timeout: 5000 });
+const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
 const morgan = require('morgan');
 
 const app = express();
 const PORT = 3000;
+
+const serverURL = 'http://62.62.80.186:4000';
+const testURL = 'http://localhost:3001';
+
+let requestURL = testURL;
 
 let status = 'ONLINE';
 
@@ -12,29 +17,23 @@ app.use(morgan('dev'));
 const toggleStatus = (status, currStatus) => {
   if (status !== currStatus) {
     // send alert
-    return status;
+    console.log(`Status changed: ${status}`)
   }
+  return status;
 }
 
-const request = (timeout) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      axios.get('162.62.80.186:4000')
-        .then(resolve)
-        .catch(reject)
-    }, timeout)
-  });
-}
-
-const queueNextRequest = () => {
-  let time = 0;
-
-  if (status === 'ONLINE') {
-    time = 30000;
-  } else {
-    time = 5000;
-  }
-  
+const queueRequest = (timeout) => {
+  setTimeout(() => {
+    axios.get(requestURL)
+      .then((response) => {
+        status = toggleStatus('ONLINE', status);
+        queueRequest(30000);
+      })
+      .catch((err) => {
+        status = toggleStatus(`OFFLINE`, status);
+        queueRequest(5000);
+      })
+  }, timeout)
 }
 
 //Ping login server on loop
@@ -45,16 +44,9 @@ const queueNextRequest = () => {
     // invoke toggleStatus.
     // wait 30 seconds and try again.
 
-  console.log(`Sending Axios Request`);
-  axios.get('http://62.62.80.186:4000')
-    .then((response) => {
-      console.log(`Success: ${response}`)
-    })
-    .catch((err) => {
-      console.log(`Failure: ${err}`)
-    })
+queueRequest(5000);
 
-app.connect(PORT, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     console.log(`Unable to connect: ${err}`);
   } else {

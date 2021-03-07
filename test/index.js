@@ -10,21 +10,21 @@ app.use(morgan(`dev`));
 
 app.get(`/200`, (req, res) => {
   res.sendStatus(200);
-})
+});
 
 app.get(`/300`, (req, res) => {
   res.sendStatus(300);
-})
+});
 
 app.get(`/400`, (req, res) => {
   res.sendStatus(400);
-})
+});
 
 app.get(`/500`, (req, res) => {
   res.sendStatus(500);
-})
+});
 
-app.connect(PORT, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     console.log(`Unable to connect: ${err}`);
   } else {
