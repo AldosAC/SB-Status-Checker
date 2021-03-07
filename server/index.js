@@ -10,11 +10,12 @@ const PORT = 3000;
 const serverURL = 'http://62.62.80.186:4000';
 const testURL = 'http://localhost:3001';
 
-let requestURL = testURL;
+let requestURL = serverURL;
 
 let status = 'ONLINE';
 let recipients = [
-  'aldosac@gmail.com'
+  'aldosac@gmail.com',
+  '8166542253@vtext.com'
 ];
 
 app.use(morgan('dev'));
@@ -40,8 +41,8 @@ const sendAlert = (status) => {
   }
 
   Promise.all(messagePool)
-    .then(({ result }) => {
-      console.log(`Update notification success: ${result}`)
+    .then(() => {
+      console.log(`Update notification success`)
     })
     .catch((err) => {
       console.log(`Update notification fail: ${err}`)
