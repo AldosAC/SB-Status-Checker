@@ -13,17 +13,33 @@ const testURL = 'http://localhost:3001';
 let requestURL = testURL;
 
 let status = 'ONLINE';
+let recipients = [
+  'aldosac@gmail.com'
+];
 
 app.use(morgan('dev'));
 
 const sendAlert = (status) => {
   let subject = `SB Update: Servers are ${status}`;
+  let text = `
+  The Shadowbane servers are currently ${status}.
 
-  send({
-    to: 'aldosac@gmail.com',
-    subject,
-    text: `Brought to you by SB Status Checker`
-  })
+  Another email will be sent when the server status changes.
+
+  Brought to you by SB Status Checker!
+  `
+
+  let messagePool = [];
+
+  for (let i = 0; i < recipients.length; i++) {
+    messagePool.push(send({
+      to: recipients[i],
+      subject,
+      text
+    }));
+  }
+
+  Promise.all(messagePool)
     .then(({ result }) => {
       console.log(`Update notification success: ${result}`)
     })
@@ -34,8 +50,8 @@ const sendAlert = (status) => {
 
 const toggleStatus = (status, currStatus) => {
   if (status !== currStatus) {
-    // send alert
-    console.log(`Status changed: ${status}`)
+    sendAlert(status);
+    console.log(`Status changed: ${status}`);
   }
   return status;
 }
