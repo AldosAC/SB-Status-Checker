@@ -1,6 +1,9 @@
 ## NODE_MODULES ##
 /node_modules
 
+## VSCODE ##
+/.vscode
+
 ## CONFIG ##
 config.js
 
