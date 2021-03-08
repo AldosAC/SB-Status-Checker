@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.prod.js",
     "build-dev": "webpack --config webpack.dev.js",
     "start-local": "nodemon --watch local/server ./local/server",
-    "test-server": "nodemon --watch local/test ./test"
+    "test-server": "nodemon --watch local/test ./local/test"
   },
   "keywords": [],
   "author": "",

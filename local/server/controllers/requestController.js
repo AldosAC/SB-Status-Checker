@@ -1,7 +1,9 @@
 const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
 const { sendAlert } = require('./messageController.js');
 
-const requestURL = 'http://162.62.80.186:4000';
+const requestURL = 'http://localhost:3001';
+
+const serverURL = 'http://162.62.80.186:4000';
 
 let status = '';
 let statusCounter = 0;
