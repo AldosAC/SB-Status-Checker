@@ -3,7 +3,7 @@ const send = require('gmail-send')(config);
 const { recipients } = require('../../../config.js')
 
 const sendAlert = (status) => {
-  let subject = `AWS SB Update: Servers are ${status}`;
+  let subject = `SB Update: Servers are ${status}`;
   let text = `
   The Shadowbane servers are currently ${status}.
 
