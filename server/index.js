@@ -12,11 +12,12 @@ const testURL = 'http://localhost:3001';
 
 let requestURL = serverURL;
 
-let status = 'OFFLINE';
+let status = 'ONLINE';
 let statusCounter = 0;
 let recipients = [
   'aldosac@gmail.com',
-  '8166542253@vtext.com'
+  '8166542253@vtext.com',
+  'rmtmastricola@gmail.com'
 ];
 
 app.use(morgan('dev'));
@@ -69,26 +70,31 @@ const statusCheck = (status, counter) => {
   }
 }
 
+const serverIsOnline = () => {
+  status = toggleStatus('ONLINE', status);
+  statusCounter = statusCheck(status, statusCounter);
+  queueRequest(30000);
+}
+
+const serverIsOffline = () => {
+  status = toggleStatus(`OFFLINE`, status);
+  statusCounter = statusCheck(status, statusCounter);
+  queueRequest(5000);
+}
+
 const queueRequest = (timeout) => {
   setTimeout(() => {
     axios.get(requestURL)
       .then((response) => {
-        status = toggleStatus('ONLINE', status);
-        statusCounter = statusCheck(status, statusCounter);
-        console.log(`Success: ${response.status}`)
-        queueRequest(30000);
+        serverIsOnline();
       })
       .catch((err) => {
         err = err.message.split(' ')[0];
         
         if (err === 'Parse') {
-          status = toggleStatus('ONLINE', status);
-          statusCounter = statusCheck(status, statusCounter);
-          queueRequest(30000);
+          serverIsOnline();
         } else {
-          status = toggleStatus(`OFFLINE`, status);
-          statusCounter = statusCheck(status, statusCounter);
-          queueRequest(5000);
+          serverIsOffline();
         }
       })
   }, timeout)
