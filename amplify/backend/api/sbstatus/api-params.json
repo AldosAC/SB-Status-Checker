@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/api",
+            "lambdaFunction": "sbstatuschecker0f62e3b4",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/api"
+        }
+    ],
+    "resourceName": "sbstatus",
+    "apiName": "sbstatus",
+    "functionArns": [
+        {
+            "lambdaFunction": "sbstatuschecker0f62e3b4"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-sbstatuschecker-dev-104710-authRole",
+        "unAuthRoleName": "amplify-sbstatuschecker-dev-104710-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "sbstatuschecker0f62e3b4",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
