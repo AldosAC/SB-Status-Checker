@@ -20,7 +20,7 @@ const getRecipients = () => {
     })
 };
 
-const addRecipient = (emal) => {
+const addRecipient = (email) => {
   const query = {
     TableName,
     Item: {
@@ -39,7 +39,27 @@ const addRecipient = (emal) => {
     });
 };
 
+const removeRecipient = (email) => {
+  const query = {
+    TableName,
+    Key: {
+      email
+    }
+  }
+
+  return ddb.delete(query)
+    .then(() => {
+      console.log(`Recipient removed from DDB: ${email}`);
+    })
+    .catch((err) => {
+      const message = `${timeStamp()} - Unable to remove recipient ${email} - ${err}`
+      log(message);
+      console.log(message);
+    });
+}
+
 module.exports = {
   getRecipients,
-  addRecipient
+  addRecipient,
+  removeRecipient
 }
