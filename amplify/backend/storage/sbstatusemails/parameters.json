@@ -1,5 +1,0 @@
-{
-    "tableName": "sbstatusemails",
-    "partitionKeyName": "email",
-    "partitionKeyType": "S"
-}
