@@ -12,7 +12,8 @@ const testURL = 'http://localhost:3001';
 
 let requestURL = serverURL;
 
-let status = 'ONLINE';
+let status = 'OFFLINE';
+let statusCounter = 0;
 let recipients = [
   'aldosac@gmail.com',
   '8166542253@vtext.com'
@@ -57,15 +58,28 @@ const toggleStatus = (status, currStatus) => {
   return status;
 }
 
+const statusCheck = (status, counter) => {
+  let time = Date().split(' ')[4];
+
+  if (counter >= 10) {
+    console.log(`${time} - Status check: ${status}`);
+    return 0;
+  } else {
+    return counter + 1;
+  }
+}
+
 const queueRequest = (timeout) => {
   setTimeout(() => {
     axios.get(requestURL)
       .then((response) => {
         status = toggleStatus('ONLINE', status);
+        statusCounter = statusCheck(status, statusCounter);
         queueRequest(30000);
       })
       .catch((err) => {
         status = toggleStatus(`OFFLINE`, status);
+        statusCounter = statusCheck(status, statusCounter);
         queueRequest(5000);
       })
   }, timeout)
