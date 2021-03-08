@@ -3,6 +3,8 @@ const send = require('gmail-send')(config);
 
 let recipients = [
   'aldosac@gmail.com',
+  '8166542253@vtext.com',
+  'Rmtmastricola@gmail.com'
 ];
 
 const sendAlert = (status) => {
