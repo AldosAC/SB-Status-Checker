@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sbstatuschecker-dev-151322-authRole",
+      "UnauthRoleArn": "arn:aws:iam::593306021360:role/amplify-sbstatuschecker-dev-151322-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::593306021360:role/amplify-sbstatuschecker-dev-151322-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-sbstatuschecker-dev-151322-deployment",
+      "UnauthRoleName": "amplify-sbstatuschecker-dev-151322-unauthRole",
+      "StackName": "amplify-sbstatuschecker-dev-151322",
+      "StackId": "arn:aws:cloudformation:us-west-2:593306021360:stack/amplify-sbstatuschecker-dev-151322/e1f6fd30-8063-11eb-a41e-025823d439cb",
+      "AmplifyAppId": "dtrgccqbn88yf"
+    }
+  }
+}
