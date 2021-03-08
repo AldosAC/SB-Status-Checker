@@ -5,8 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "aws-serverless-express": "^3.3.5",
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "gmail-send": "^1.8.10",
+    "axios": "^0.21.1"
   },
   "devDependencies": {},
   "scripts": {
