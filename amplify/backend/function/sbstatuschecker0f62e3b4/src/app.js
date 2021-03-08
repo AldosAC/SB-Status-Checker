@@ -1,12 +1,10 @@
 const express = require('express');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-const morgan = require('morgan');
 const { getStatus } = require('./controllers/requestController.js');
 
 const app = express();
 const PORT = 3000;
 
-app.use(morgan('dev'));
 app.use(awsServerlessExpressMiddleware.eventContext());
 
 app.get(`/api/status`, (req, res) => {
