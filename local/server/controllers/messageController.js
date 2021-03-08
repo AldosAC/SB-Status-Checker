@@ -1,9 +1,6 @@
 const config = require('../../../config.js');
 const send = require('gmail-send')(config);
-
-let recipients = [
-  'aldosac@gmail.com',
-];
+const { recipients } = require('../../../config.js')
 
 const sendAlert = (status) => {
   let subject = `AWS SB Update: Servers are ${status}`;
