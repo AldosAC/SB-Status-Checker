@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./server",
+    "start-local": "nodemon ./local/server",
     "test-server": "nodemon ./test"
   },
   "keywords": [],

@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
 const morgan = require('morgan');
-const config = require('../config.js');
+const config = require('../../config.js');
 const send = require('gmail-send')(config);
 
 const app = express();
