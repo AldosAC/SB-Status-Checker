@@ -7,7 +7,7 @@ const send = require('gmail-send')(config);
 const app = express();
 const PORT = 3000;
 
-const serverURL = 'http://62.62.80.186:4000';
+const serverURL = 'http://162.62.80.186:4000';
 const testURL = 'http://localhost:3001';
 
 let requestURL = serverURL;
@@ -75,12 +75,21 @@ const queueRequest = (timeout) => {
       .then((response) => {
         status = toggleStatus('ONLINE', status);
         statusCounter = statusCheck(status, statusCounter);
+        console.log(`Success: ${response.status}`)
         queueRequest(30000);
       })
       .catch((err) => {
-        status = toggleStatus(`OFFLINE`, status);
-        statusCounter = statusCheck(status, statusCounter);
-        queueRequest(5000);
+        err = err.message.split(' ')[0];
+        
+        if (err === 'Parse') {
+          status = toggleStatus('ONLINE', status);
+          statusCounter = statusCheck(status, statusCounter);
+          queueRequest(30000);
+        } else {
+          status = toggleStatus(`OFFLINE`, status);
+          statusCounter = statusCheck(status, statusCounter);
+          queueRequest(5000);
+        }
       })
   }, timeout)
 }
