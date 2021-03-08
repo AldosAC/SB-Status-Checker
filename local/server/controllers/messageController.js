@@ -1,6 +1,8 @@
 const config = require('../../../config.js');
 const send = require('gmail-send')(config);
 const { recipients } = require('../../../config.js')
+const { log } = require('./logController.js')
+const { timeStamp } = require('../utils/timeStamp.js');
 
 const sendAlert = (status) => {
   let subject = `SB Update: Servers are ${status}`;
@@ -24,10 +26,13 @@ const sendAlert = (status) => {
 
   Promise.all(messagePool)
     .then(() => {
-      console.log(`Update notification success`)
+      console.log(`${timeStamp()} - Update sent: ${status}`)
     })
     .catch((err) => {
-      console.log(`Update notification fail: ${err}`)
+      let message = `${timeStamp()} - Update notification fail: ${err}`;
+      
+      log(message);
+      console.log(message)
     })
 }
 
