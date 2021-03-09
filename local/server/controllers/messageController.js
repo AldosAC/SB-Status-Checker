@@ -61,6 +61,12 @@ const sendRegistrationConfirmation = (email) => {
     subject,
     text
   })
+    .then(() => {
+      console.log(`Confirmation email sent`);
+    })
+    .catch((err) => {
+      console.log(`Unable to send confirmation email`);
+    })
 };
 
 const sendRemoveConfirmation = (email) => {
@@ -76,6 +82,12 @@ const sendRemoveConfirmation = (email) => {
     subject,
     text
   })
+    .then(() => {
+      console.log(`Confirmation email sent`);
+    })
+    .catch((err) => {
+      console.log(`Unable to send confirmation email`);
+    })
 }
 
 module.exports = {
