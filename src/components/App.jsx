@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import ServerStatus from './ServerStatus.jsx';
 import EmailManagement from './EmailManagement.jsx';
+import About from './About.jsx';
 
 const App = (props) => {
   return (
@@ -10,6 +11,7 @@ const App = (props) => {
       <Container>
         <ServerStatus />
         <EmailManagement />
+        <About />
       </Container>
     </React.Fragment>
   )
