@@ -19,7 +19,7 @@ const corsOptions = {
   ]
 }
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(cors(corsOptions));
 
 app.get(`/api/status`, (req, res) => {
