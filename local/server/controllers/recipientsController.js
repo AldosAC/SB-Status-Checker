@@ -39,6 +39,7 @@ const addRecipient = (email) => {
   return ddb.put(query).promise()
     .then(() => {
       console.log(`Recipient added to DDB: ${email}`);
+      console.log(`sendRegistrationConfirmation: ${sendRegistrationConfirmation}`)
       sendRegistrationConfirmation(email);
     })
     .catch((err) => {
@@ -60,6 +61,7 @@ const removeRecipient = (email) => {
   return ddb.delete(query).promise()
     .then(() => {
       console.log(`Recipient removed from DDB: ${email}`);
+      console.log(`sendRemoveConfirmation: ${sendRemoveConfirmation}`)
       sendRemoveConfirmation(email);
     })
     .catch((err) => {
