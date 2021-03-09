@@ -1,6 +1,7 @@
 const express = require('express');
 const { getStatus } = require('./controllers/requestController.js');
 const { addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
+const { sendRegistrationConfirmation, sendRemoveConfirmation } = require('./controllers/messageController.js');
 const { log } = require('./controllers/logController.js');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -32,6 +33,9 @@ app.post('/api/recipients', (req, res) => {
   if (email) {
     addRecipient(email)
     .then(() => {
+      sendRegistrationConfirmation(email)
+        .then(() => console.log(`Confirmation email sent: ${email}`))
+        .catch((err) => console.log(`Confirmation email failed: ${err}`));
       res.sendStatus(201);
     })
     .catch((err) => {
@@ -52,6 +56,9 @@ app.delete('/api/recipients', (req, res) => {
   if(email) {
     removeRecipient(email)
       .then(() => {
+        sendRemoveConfirmation(email)
+          .then(() => console.log(`Confirmation email sent: ${email}`))
+          .catch((err) => console.log(`Confirmation email failed: ${err}`));
         res.sendStatus(200);
       })
       .catch((err) => {
