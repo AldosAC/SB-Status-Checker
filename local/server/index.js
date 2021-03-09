@@ -33,9 +33,7 @@ app.post('/api/recipients', (req, res) => {
   if (email) {
     addRecipient(email)
     .then(() => {
-      sendRegistrationConfirmation(email)
-        .then(() => console.log(`Confirmation email sent: ${email}`))
-        .catch((err) => console.log(`Confirmation email failed: ${err}`));
+      sendRegistrationConfirmation(email);
       res.sendStatus(201);
     })
     .catch((err) => {
@@ -56,9 +54,7 @@ app.delete('/api/recipients', (req, res) => {
   if(email) {
     removeRecipient(email)
       .then(() => {
-        sendRemoveConfirmation(email)
-          .then(() => console.log(`Confirmation email sent: ${email}`))
-          .catch((err) => console.log(`Confirmation email failed: ${err}`));
+        sendRemoveConfirmation(email);
         res.sendStatus(200);
       })
       .catch((err) => {
