@@ -11,10 +11,11 @@ const TableName = "SBStatusEmails"
 
 const getRecipients = () => {
   const query = {
-    TableName
+    TableName,
+    Select: "ALL_ATTRIBUTES"
   };
 
-  return ddb.get(query).promise()
+  return ddb.scan(query).promise()
     .then(({ Items }) => {
       return Items;
     })

@@ -6,7 +6,7 @@ const { timeStamp } = require('../utils/timeStamp.js');
 const serverURL = 'http://162.62.80.186:4000';
 const testURL = 'http://34.216.115.201:3001';
 
-const requestURL = serverURL;
+const requestURL = testURL;
 
 let status = '';
 let statusCounter = 0;

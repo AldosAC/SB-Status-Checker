@@ -27,14 +27,27 @@ app.get('/api/recipients', (req, res) => {
 app.post('/api/recipients', (req, res) => {
   const { email } = req.query;
 
-  console.log(`Received POST request for ${email}`);
-
   addRecipient(email)
     .then(() => {
       res.send(201);
     })
     .catch((err) => {
       const message = `Unable to add ${email} - ${err}`;
+      log(message);
+      console.log(message);
+      res.setStatus(500).send(message);
+    })
+})
+
+app.delete('/api/recipients', (req, res) => {
+  const { email } = req.query;
+
+  deleteRecipient(email)
+    .then(() => {
+      res.send(200);
+    })
+    .catch((err) => {
+      const message = `Unable to delete ${email} - ${err}`;
       log(message);
       console.log(message);
       res.setStatus(500).send(message);

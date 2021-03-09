@@ -1,6 +1,5 @@
 const config = require('../../../config.js');
 const send = require('gmail-send')(config);
-const { recipients } = require('../../../config.js')
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
 const { getRecipients } = require('./recipientsController.js');
@@ -15,23 +14,34 @@ const sendAlert = (status) => {
   To unsubscribe, visit https://sbstatus.joelcarpenter.net
   `
 
-  let messagePool = [];
+  getRecipients()
+    .then((recipients) => {
+      let messagePool = [];
+    
+      for (let i = 0; i < recipients.length; i++) {
+        console.log(`Recipient: ${recipients[i].email}`)
 
-  for (let i = 0; i < recipients.length; i++) {
-    messagePool.push(send({
-      to: recipients[i],
-      subject,
-      text
-    }));
-  }
-
-  Promise.all(messagePool)
-    .then(() => {
-      console.log(`${timeStamp()} - Update sent: ${status}`)
+        messagePool.push(send({
+          to: recipients[i].email,
+          subject,
+          text
+        }));
+      }
+    
+      Promise.all(messagePool)
+        .then(() => {
+          console.log(`${timeStamp()} - Update sent: ${status}`)
+        })
+        .catch((err) => {
+          let message = `${timeStamp()} - Update notification fail: ${err}`;
+          
+          log(message);
+          console.log(message)
+        })
     })
     .catch((err) => {
       let message = `${timeStamp()} - Update notification fail: ${err}`;
-      
+          
       log(message);
       console.log(message)
     })
