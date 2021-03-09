@@ -19,8 +19,6 @@ const sendAlert = (status) => {
       let messagePool = [];
     
       for (let i = 0; i < recipients.length; i++) {
-        console.log(`Recipient: ${recipients[i].email}`)
-
         messagePool.push(send({
           to: recipients[i].email,
           subject,

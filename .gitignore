@@ -11,7 +11,7 @@ config.js
 *.pem
 
 ## LOGS ##
-/local/server/logs
+/local/server/logs/*
 
 #amplify
 amplify/\#current-cloud-backend
