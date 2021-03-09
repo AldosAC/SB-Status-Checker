@@ -1,4 +1,6 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const { getStatus } = require('./controllers/requestController.js');
 const { getRecipients, addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
 const { log } = require('./controllers/logController.js');
@@ -6,6 +8,13 @@ const headers = require('./headers.js');
 
 const app = express();
 const PORT = 3658;
+
+var key = fs.readFileSync(__dirname + '/../../certs/selfsigned.key');
+var cert = fs.readFileSync(__dirname + '/../../certs/selfsigned.crt');
+var options = {
+  key: key,
+  cert: cert
+};
 
 app.use((req, res, next) => {
   res.set(headers);
@@ -55,7 +64,9 @@ app.delete('/api/recipients', (req, res) => {
   }
 })
 
-app.listen(PORT, (err) => {
+var server = https.createServer(options, app);
+
+server.listen(PORT, (err) => {
   if (err) {
     console.log(`Unable to connect: ${err}`);
   } else {
