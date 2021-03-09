@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
-const { sendRegistrationConfirmation, sendRemoveConfirmation } = require('./messageController');
+const { sendRegistrationConfirmation, sendRemoveConfirmation } = require('./messageController.js');
 
 AWS.config.update({
   region: 'us-west-2'
