@@ -5,6 +5,7 @@ import { url } from '../config.js';
 
 const ServerStatus = (props) => {
   const [ status, setStatus ] = useState('');
+  let statusIndicator = '';
 
   const updateStatus = (status) => {
     setStatus(status);
@@ -12,43 +13,60 @@ const ServerStatus = (props) => {
 
   const getStatus = () => {
     axios.get(`${url}/api/status`)
-        .then(({ data }) => updateStatus(data))
-        .catch((err) => console.log(err));
+      .then(({ data }) => updateStatus(data))
+      .catch((err) => console.log(err));
 
-    setTimeout(() => {
-      axios.get(`${url}/api/status`)
-        .then(({ data }) => updateStatus(data))
-        .catch((err) => console.log(err));
-    }, 5000)
+    setTimeout(getStatus, 5000)
   }
 
   useEffect(() => {
     getStatus()
   }, []);
 
+  if (status === 'ONLINE') {
+    statusIndicator = (<ServerOnline>Online</ServerOnline>)
+  } else if (status === 'OFFLINE') {
+    statusIndicator = (<ServerOffline>Offline</ServerOffline>)
+  }
+
   return (
     <StatusContainer>
-      <ServerOnline />
-      <ServerOffline />
+      <Header>
+        Shadowbane Server Status
+      </Header>
+      <IndicatorContainer>
+        {statusIndicator}
+      </IndicatorContainer>
     </StatusContainer>
   )
 }
 
 const StatusContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0;
 `;
-const ServerOnline = styled.div`
-  width: 300px;
+const Header = styled.div`
+  font-size: 60px;
+`;
+const IndicatorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 300px;
-  border-radius: 150px;
-  background-color: green;
+  width: 500px;
+`;
+const ServerOnline = styled.div`
+  color: green;
+  text-align: center;
+  font-size: 120px;
 `;
 const ServerOffline = styled.div`
-  width: 300px;
-  height: 300px;
-  border-radius: 150px;
-  background-color: red;
+  color: red;
+  text-align: center;
+  font-size: 120px;
 `;
 
 export default ServerStatus;
