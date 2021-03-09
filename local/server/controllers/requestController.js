@@ -1,8 +1,10 @@
 const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
+const { testURL } = require('../../../config.js');
 const { sendAlert } = require('./messageController.js');
+const { log } = require('./logController.js')
+const { timeStamp } = require('../utils/timeStamp.js');
 
 const serverURL = 'http://162.62.80.186:4000';
-const testURL = 'http://localhost:3001';
 
 const requestURL = serverURL;
 
@@ -11,17 +13,21 @@ let statusCounter = 0;
 
 const toggleStatus = (status, currStatus) => {
   if (status !== currStatus && currStatus !== '') {
+    let message = `${timeStamp()} - Status changed: ${status}`
+
+    log(message);
+    console.log(message);
     sendAlert(status);
-    console.log(`Status changed: ${status}`);
   }
   return status;
 }
 
 const statusCheck = (status, counter) => {
-  let time = Date().split(' ')[4];
+  if (counter >= 40) {
+    let message = `${timeStamp()} - Status check: ${status}`
 
-  if (counter >= 10) {
-    console.log(`${time} - Status check: ${status}`);
+    log(message);
+    console.log(message);
     return 0;
   } else {
     return counter + 1;
@@ -62,7 +68,7 @@ const getStatus = () => {
   return status;
 }
 
-queueRequest(5000);
+queueRequest(0);
 
 module.exports = {
   getStatus,

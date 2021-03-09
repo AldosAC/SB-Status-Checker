@@ -5,10 +5,16 @@
 /.vscode
 
 ## CONFIG ##
-config.js
+/config.js
+
+## BUNDLE ##
+/public/bundle.js
 
 ## PEM ##
 *.pem
+
+## LOGS ##
+/local/server/logs/*
 
 #amplify
 amplify/\#current-cloud-backend
