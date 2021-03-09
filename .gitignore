@@ -7,6 +7,9 @@
 ## CONFIG ##
 config.js
 
+## BUNDLE ##
+/public/bundle.js
+
 ## PEM ##
 *.pem
 
