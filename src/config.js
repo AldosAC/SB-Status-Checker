@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'https://ec2-18-237-177-160.us-west-2.compute.amazonaws.com:3658'
+  url: 'https://sbstatus-1753062964.us-west-2.elb.amazonaws.com'
 }
