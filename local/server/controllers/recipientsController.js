@@ -14,9 +14,15 @@ const getRecipients = () => {
     TableName
   };
 
-  return ddb.get(query)
+  return ddb.get(query).promise()
     .then(({ Items }) => {
       return Items;
+    })
+    .catch((err) => {
+      const message = `${timeStamp()} - Unable to get recipients - ${err}`
+      log(message);
+      console.log(message);
+      return err;
     })
 };
 
@@ -28,7 +34,9 @@ const addRecipient = (email) => {
     }
   }
 
-  return ddb.put(query)
+  console.log(`ddb: ${ddb}`);
+
+  return ddb.put(query).promise()
     .then(() => {
       console.log(`Recipient added to DDB: ${email}`);
     })
@@ -36,6 +44,7 @@ const addRecipient = (email) => {
       const message = `${timeStamp()} - Unable to add recipient ${email} - ${err}`
       log(message);
       console.log(message);
+      return err;
     });
 };
 
@@ -47,7 +56,7 @@ const removeRecipient = (email) => {
     }
   }
 
-  return ddb.delete(query)
+  return ddb.delete(query).promise()
     .then(() => {
       console.log(`Recipient removed from DDB: ${email}`);
     })
@@ -55,6 +64,7 @@ const removeRecipient = (email) => {
       const message = `${timeStamp()} - Unable to remove recipient ${email} - ${err}`
       log(message);
       console.log(message);
+      return err;
     });
 }
 

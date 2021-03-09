@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const { getStatus } = require('./controllers/requestController.js');
 const { getRecipients, addRecipient, deleteRecipient } = require('./controllers/recipientsController.js');
+const { log } = require('./controllers/logController.js');
 
 const app = express();
 const PORT = 3658;
@@ -22,6 +23,23 @@ app.get('/api/recipients', (req, res) => {
       res.send(`Error getting recipients: ${err}`);
     })
 });
+
+app.post('/api/recipients', (req, res) => {
+  const { email } = req.query;
+
+  console.log(`Received POST request for ${email}`);
+
+  addRecipient(email)
+    .then(() => {
+      res.send(201);
+    })
+    .catch((err) => {
+      const message = `Unable to add ${email} - ${err}`;
+      log(message);
+      console.log(message);
+      res.setStatus(500).send(message);
+    })
+})
 
 app.listen(PORT, (err) => {
   if (err) {
