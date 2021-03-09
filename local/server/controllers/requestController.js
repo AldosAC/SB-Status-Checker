@@ -1,12 +1,12 @@
 const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
+const { testURL } = require('../../../config.js');
 const { sendAlert } = require('./messageController.js');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
 
 const serverURL = 'http://162.62.80.186:4000';
-const testURL = 'http://34.216.115.201:3001';
 
-const requestURL = testURL;
+const requestURL = serverURL;
 
 let status = '';
 let statusCounter = 0;
