@@ -1,26 +1,52 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import isEmail from 'validator/lib/isEmail';
+import { subscribe, unsubscribe } from '../controllers/subscriptionControllers.js';
 
 const EmailManagement = (props) => {
   const [ email, setEmail ] = useState('');
 
-  const inputRef = useRef();
-
   const onChangeHandler = ({ target: { value }}) => setEmail(value);
+
+  const resetEmail = () => setEmail('');
+
+  const subscribeSubmitHandler = () => {
+    if (isEmail(email)) {
+      subscribe(email)
+        .then(() => {
+          console.log(`Successfully subscribed: ${email}`)
+          resetEmail();
+        })
+        .catch((err) => console.log(`Error subscribing: ${email}`));
+    } else {
+      console.log(`Invalid email: ${email}`);
+    }
+  }
+
+  const unSubscribeSubmitHandler = () => {
+    if (isEmail(email)) {
+      unsubscribe(email)
+        .then(() => {
+          console.log(`Successfully unsubscribed: ${email}`)
+          resetEmail();
+        })
+        .catch((err) => console.log(`Error unsubscribing: ${email}`));
+    } else {
+      console.log(`Invalid email: ${email}`);
+    }
+  }
 
   return (
     <Container>
       <Header>Email Notifications</Header>
       <Input 
-        ref={inputRef} 
         value={email} 
         placeholder='Enter your email address for real-time updates'
         onChange={onChangeHandler} 
       ></Input>
       <ButtonContainer>
-        <SubButton>Subscribe</SubButton>
-        <UnSubButton>Unsubscribe</UnSubButton>
+        <SubButton onClick={subscribeSubmitHandler}>Subscribe</SubButton>
+        <UnSubButton onClick={unSubscribeSubmitHandler} >Unsubscribe</UnSubButton>
       </ButtonContainer>
     </Container>
   )

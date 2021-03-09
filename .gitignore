@@ -5,7 +5,7 @@
 /.vscode
 
 ## CONFIG ##
-config.js
+/config.js
 
 ## BUNDLE ##
 /public/bundle.js
