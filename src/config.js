@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'https://sbsa.joelcarpenter.net'
+  url: 'https://sbba.joelcarpenter.net'
 }
