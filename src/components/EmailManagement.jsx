@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import isEmail from 'validator/lib/isEmail';
 import { subscribe, unsubscribe } from '../controllers/subscriptionControllers.js';
@@ -11,28 +11,32 @@ const EmailManagement = (props) => {
   const resetEmail = () => setEmail('');
 
   const subscribeSubmitHandler = () => {
-    if (isEmail(email)) {
-      subscribe(email)
+    let lowerEmail = email.toLowerCase();
+
+    if (isEmail(lowerEmail)) {
+      subscribe(lowerEmail)
         .then(() => {
-          console.log(`Successfully subscribed: ${email}`)
+          console.log(`Successfully subscribed: ${lowerEmail}`)
           resetEmail();
         })
-        .catch((err) => console.log(`Error subscribing: ${email}`));
+        .catch((err) => console.log(`Error subscribing: ${lowerEmail}`));
     } else {
-      console.log(`Invalid email: ${email}`);
+      console.log(`Invalid email: ${lowerEmail}`);
     }
   }
 
   const unSubscribeSubmitHandler = () => {
-    if (isEmail(email)) {
-      unsubscribe(email)
+    let lowerEmail = email.toLowerCase();
+
+    if (isEmail(lowerEmail)) {
+      unsubscribe(lowerEmail)
         .then(() => {
-          console.log(`Successfully unsubscribed: ${email}`)
+          console.log(`Successfully unsubscribed: ${lowerEmail}`)
           resetEmail();
         })
-        .catch((err) => console.log(`Error unsubscribing: ${email}`));
+        .catch((err) => console.log(`Error unsubscribing: ${lowerEmail}`));
     } else {
-      console.log(`Invalid email: ${email}`);
+      console.log(`Invalid email: ${lowerEmail}`);
     }
   }
 
