@@ -1,13 +1,10 @@
 const express = require('express');
-const morgan = require('morgan');
 const { getStatus } = require('./controllers/requestController.js');
 const { getRecipients, addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
 const { log } = require('./controllers/logController.js');
 
 const app = express();
 const PORT = 3658;
-
-app.use(morgan('dev'));
 
 app.get(`/api/status`, (req, res) => {
   res.send(getStatus());
