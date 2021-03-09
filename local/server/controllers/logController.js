@@ -8,7 +8,7 @@ module.exports.log = (message) => {
 
   fs.appendFile(logFile, `${message}\n`, (err) => {
     if (err) {
-      console.log(`Unable to write to log file`);
+      console.log(`Unable to write to log file: ${err}`);
     }
   });
 }
