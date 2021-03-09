@@ -17,6 +17,7 @@
   "dependencies": {
     "aws-sdk": "^2.859.0",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "gmail-send": "^1.8.10",
     "morgan": "^1.10.0",
