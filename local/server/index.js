@@ -9,8 +9,8 @@ const headers = require('./headers.js');
 const app = express();
 const PORT = 3658;
 
-var key = fs.readFileSync(__dirname + '/../../certs/selfsigned.key');
-var cert = fs.readFileSync(__dirname + '/../../certs/selfsigned.crt');
+var key = fs.readFileSync(__dirname + '/certs/selfsigned.key');
+var cert = fs.readFileSync(__dirname + '/certs/selfsigned.crt');
 var options = {
   key: key,
   cert: cert
