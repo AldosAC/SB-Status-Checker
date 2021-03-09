@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
+const { sendRegistrationConfirmation, sendRemoveConfirmation } = require('./messageController');
 
 AWS.config.update({
   region: 'us-west-2'
@@ -38,6 +39,7 @@ const addRecipient = (email) => {
   return ddb.put(query).promise()
     .then(() => {
       console.log(`Recipient added to DDB: ${email}`);
+      sendRegistrationConfirmation(email);
     })
     .catch((err) => {
       const message = `${timeStamp()} - Unable to add recipient ${email} - ${err}`
@@ -58,6 +60,7 @@ const removeRecipient = (email) => {
   return ddb.delete(query).promise()
     .then(() => {
       console.log(`Recipient removed from DDB: ${email}`);
+      sendRemoveConfirmation(email);
     })
     .catch((err) => {
       const message = `${timeStamp()} - Unable to remove recipient ${email} - ${err}`

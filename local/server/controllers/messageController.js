@@ -45,6 +45,41 @@ const sendAlert = (status) => {
     })
 }
 
+const sendRegistrationConfirmation = (email) => {
+  const subject = `SB Status Update - Registration confirmation`;
+  const text = `
+    You've been registered to receive Shadowbane server status updates with the email: ${email}
+
+    That's it!  Emails will be sent out within seconds of the server status changing,
+    so kick back and relax.
+
+    If you'd like to unsubscribe, visit https://sbstatus.joelcarpenter.net
+  `;
+
+  return send({
+    to: email,
+    subject,
+    text
+  })
+};
+
+const sendRemoveConfirmation = (email) => {
+  const subject = `SB Status Update - Unsubcribe confirmation`;
+  const text = `
+    You've been unsubscribed from Shadowbane status updates.
+
+    If you'd like to resubscribe, visit https://sbstatus.joelcarpenter.net
+  `;
+
+  return send({
+    to: email,
+    subject,
+    text
+  })
+}
+
 module.exports = {
-  sendAlert
+  sendAlert,
+  sendRegistrationConfirmation,
+  sendRemoveConfirmation
 }
