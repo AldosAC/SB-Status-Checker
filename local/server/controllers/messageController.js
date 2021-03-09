@@ -20,7 +20,7 @@ const sendAlert = (status) => {
     
       for (let i = 0; i < recipients.length; i++) {
         messagePool.push(send({
-          to: recipients[i].email,
+          to: recipients[i]?.email,
           subject,
           text
         }));

@@ -19,7 +19,8 @@ app.get(`/api/status`, (req, res) => {
 app.post('/api/recipients', (req, res) => {
   const { email } = req.query;
 
-  addRecipient(email)
+  if (email) {
+    addRecipient(email)
     .then(() => {
       res.sendStatus(201);
     })
@@ -29,21 +30,29 @@ app.post('/api/recipients', (req, res) => {
       console.log(message);
       res.setStatus(500).send(message);
     })
+  } else {
+    res.setStatus(404).send(`Invalid email query`)
+  }
+  
 })
 
 app.delete('/api/recipients', (req, res) => {
   const { email } = req.query;
 
-  removeRecipient(email)
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      const message = `Unable to delete ${email} - ${err}`;
-      log(message);
-      console.log(message);
-      res.setStatus(500).send(message);
-    })
+  if(email) {
+    removeRecipient(email)
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((err) => {
+        const message = `Unable to delete ${email} - ${err}`;
+        log(message);
+        console.log(message);
+        res.setStatus(500).send(message);
+      })
+  } else {
+    res.setStatus(404).send(`Invalid email query`)
+  }
 })
 
 app.listen(PORT, (err) => {
