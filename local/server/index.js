@@ -3,14 +3,17 @@ const { getStatus } = require('./controllers/requestController.js');
 const { getRecipients, addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
 const { log } = require('./controllers/logController.js');
 const headers = require('./headers.js');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = 3658;
 
-app.use((req, res, next) => {
-  res.set(headers);
-  next();
-})
+// app.use((req, res, next) => {
+//   res.set(headers);
+//   next();
+// })
+
+app.use(morgan('dev'));
 
 app.get(`/api/status`, (req, res) => {
   res.send(getStatus());
