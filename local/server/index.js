@@ -1,6 +1,6 @@
 const express = require('express');
 const { getStatus } = require('./controllers/requestController.js');
-const { getRecipients, addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
+const { addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
 const { log } = require('./controllers/logController.js');
 const morgan = require('morgan');
 const cors = require('cors');

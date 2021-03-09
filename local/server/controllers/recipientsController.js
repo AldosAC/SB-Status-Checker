@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
-const { sendRegistrationConfirmation, sendRemoveConfirmation } = require('./messageController.js');
+const messageController = require('./messageController.js');
 
 AWS.config.update({
   region: 'us-west-2'
@@ -9,6 +9,8 @@ AWS.config.update({
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 const TableName = "SBStatusEmails"
+
+console.log(`messageController keys: ${JSON.stringify(messageController.keys())}`);
 
 const getRecipients = () => {
   const query = {
