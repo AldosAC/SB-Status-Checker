@@ -1,7 +1,6 @@
 const AWS = require('aws-sdk');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
-const messageController = require('./messageController.js');
 
 AWS.config.update({
   region: 'us-west-2'
@@ -9,8 +8,6 @@ AWS.config.update({
 
 const ddb = new AWS.DynamoDB.DocumentClient();
 const TableName = "SBStatusEmails"
-
-console.log(`messageController keys: ${JSON.stringify(messageController.keys())}`);
 
 const getRecipients = () => {
   const query = {
@@ -41,8 +38,6 @@ const addRecipient = (email) => {
   return ddb.put(query).promise()
     .then(() => {
       console.log(`Recipient added to DDB: ${email}`);
-      console.log(`sendRegistrationConfirmation: ${sendRegistrationConfirmation}`)
-      sendRegistrationConfirmation(email);
     })
     .catch((err) => {
       const message = `${timeStamp()} - Unable to add recipient ${email} - ${err}`
@@ -63,8 +58,6 @@ const removeRecipient = (email) => {
   return ddb.delete(query).promise()
     .then(() => {
       console.log(`Recipient removed from DDB: ${email}`);
-      console.log(`sendRemoveConfirmation: ${sendRemoveConfirmation}`)
-      sendRemoveConfirmation(email);
     })
     .catch((err) => {
       const message = `${timeStamp()} - Unable to remove recipient ${email} - ${err}`
