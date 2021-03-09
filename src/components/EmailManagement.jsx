@@ -5,6 +5,7 @@ import { subscribe, unsubscribe } from '../controllers/subscriptionControllers.j
 
 const EmailManagement = (props) => {
   const [ email, setEmail ] = useState('');
+  const [ placeholder, setPlaceholder ] = useState('Enter your email address for real-time updates');
 
   const onChangeHandler = ({ target: { value }}) => setEmail(value);
 
@@ -18,10 +19,13 @@ const EmailManagement = (props) => {
         .then(() => {
           console.log(`Successfully subscribed: ${lowerEmail}`)
           resetEmail();
+          setPlaceholder(`You've been subscribed to email updates`);
         })
         .catch((err) => console.log(`Error subscribing: ${lowerEmail}`));
+        setPlaceholder(`There was an error processing your request`);
     } else {
       console.log(`Invalid email: ${lowerEmail}`);
+      setPlaceholder(`You entered an invalid email`);
     }
   }
 
@@ -33,10 +37,15 @@ const EmailManagement = (props) => {
         .then(() => {
           console.log(`Successfully unsubscribed: ${lowerEmail}`)
           resetEmail();
+          setPlaceholder(`You've been unsubscribed`);
         })
-        .catch((err) => console.log(`Error unsubscribing: ${lowerEmail}`));
+        .catch((err) => {
+          console.log(`Error unsubscribing: ${lowerEmail}`)
+          setPlaceholder(`There was an error processing your request`);
+      });
     } else {
       console.log(`Invalid email: ${lowerEmail}`);
+      setPlaceholder(`You entered an invalid email`);
     }
   }
 
@@ -45,7 +54,7 @@ const EmailManagement = (props) => {
       <Header>Email Notifications</Header>
       <Input 
         value={email} 
-        placeholder='Enter your email address for real-time updates'
+        placeholder={placeholder}
         onChange={onChangeHandler} 
       ></Input>
       <ButtonContainer>
