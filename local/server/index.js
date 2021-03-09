@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const { getStatus } = require('./controllers/requestController.js');
-const { getRecipients, addRecipient, deleteRecipient } = require('./controllers/recipientsController.js');
+const { getRecipients, addRecipient, removeRecipient } = require('./controllers/recipientsController.js');
 const { log } = require('./controllers/logController.js');
 
 const app = express();
@@ -13,23 +13,12 @@ app.get(`/api/status`, (req, res) => {
   res.send(getStatus());
 })
 
-app.get('/api/recipients', (req, res) => {
-  getRecipients()
-    .then((recipients) => {
-      res.send(recipients);
-    })
-    .catch((err) => {
-      res.status(500);
-      res.send(`Error getting recipients: ${err}`);
-    })
-});
-
 app.post('/api/recipients', (req, res) => {
   const { email } = req.query;
 
   addRecipient(email)
     .then(() => {
-      res.send(201);
+      res.sendStatus(201);
     })
     .catch((err) => {
       const message = `Unable to add ${email} - ${err}`;
@@ -42,9 +31,9 @@ app.post('/api/recipients', (req, res) => {
 app.delete('/api/recipients', (req, res) => {
   const { email } = req.query;
 
-  deleteRecipient(email)
+  removeRecipient(email)
     .then(() => {
-      res.send(200);
+      res.sendStatus(200);
     })
     .catch((err) => {
       const message = `Unable to delete ${email} - ${err}`;

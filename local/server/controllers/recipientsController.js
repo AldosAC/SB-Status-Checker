@@ -35,8 +35,6 @@ const addRecipient = (email) => {
     }
   }
 
-  console.log(`ddb: ${ddb}`);
-
   return ddb.put(query).promise()
     .then(() => {
       console.log(`Recipient added to DDB: ${email}`);
