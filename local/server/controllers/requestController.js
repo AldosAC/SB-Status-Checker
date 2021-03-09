@@ -23,7 +23,7 @@ const toggleStatus = (status, currStatus) => {
 }
 
 const statusCheck = (status, counter) => {
-  if (counter >= 10) {
+  if (counter >= 40) {
     let message = `${timeStamp()} - Status check: ${status}`
 
     log(message);
@@ -68,7 +68,7 @@ const getStatus = () => {
   return status;
 }
 
-queueRequest(5000);
+queueRequest(0);
 
 module.exports = {
   getStatus,
