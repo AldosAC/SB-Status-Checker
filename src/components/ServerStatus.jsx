@@ -4,16 +4,15 @@ import axios from 'axios';
 import { url } from '../config.js';
 
 const ServerStatus = (props) => {
-  const [ status, setStatus ] = useState('');
+  const [ serverStatus, setServerStatus ] = useState({});
+  const { status, lastReset } = serverStatus;
+  const lastResetString = lastReset === 'Unknown' ? '' : new Date(Number(lastReset)).toLocaleString();
   let statusIndicator = '';
-
-  const updateStatus = (status) => {
-    setStatus(status);
-  }
+  let lastResetIndicator = '';
 
   const getStatus = () => {
     axios.get(`${url}/api/status`)
-      .then(({ data }) => updateStatus(data))
+      .then(({ data }) => setServerStatus(data))
       .catch((err) => console.log(err));
 
     setTimeout(getStatus, 5000)
@@ -29,6 +28,14 @@ const ServerStatus = (props) => {
     statusIndicator = (<ServerOffline>Offline</ServerOffline>)
   }
 
+  if (lastReset && lastReset.length > 0) {
+    lastResetIndicator = (
+      <LastResetContents>
+        Server last come online {lastResetString}
+      </LastResetContents>
+    )
+  }
+
   return (
     <StatusContainer>
       <Header>
@@ -37,6 +44,9 @@ const ServerStatus = (props) => {
       <IndicatorContainer>
         {statusIndicator}
       </IndicatorContainer>
+      <LastResetContainer>
+        {lastResetIndicator}
+      </LastResetContainer>
     </StatusContainer>
   )
 }
@@ -53,6 +63,7 @@ const Header = styled.div`
 `;
 const IndicatorContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 300px;
@@ -67,6 +78,17 @@ const ServerOffline = styled.div`
   color: red;
   text-align: center;
   font-size: 120px;
+`;
+const LastResetContents = styled.div`
+  font-size: 24px;
+  text-align: center;
+`;
+const LastResetContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 0;
 `;
 
 export default ServerStatus;
