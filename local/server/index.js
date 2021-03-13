@@ -11,7 +11,8 @@ const PORT = 3658;
 
 const corsOptions = {
   origin: [
-    'https://sbstatus.joelcarpenter.net'
+    'https://sbstatus.joelcarpenter.net',
+    'https://127.0.0.1:8080'
   ],
   methods: [
     'GET',

@@ -10,6 +10,9 @@ const ServerStatus = (props) => {
   let statusIndicator = '';
   let lastResetIndicator = '';
 
+  console.log(`lastReset: ${lastReset}`);
+  console.log(`lastResetString: ${lastResetString}`);
+
   const getStatus = () => {
     axios.get(`${url}/api/status`)
       .then(({ data }) => setServerStatus(data))
