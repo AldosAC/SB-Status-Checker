@@ -6,6 +6,7 @@
 
 ## CONFIG ##
 /config.js
+lastReset.txt
 
 ## BUNDLE ##
 bundle.js

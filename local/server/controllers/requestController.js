@@ -14,6 +14,8 @@ let lastReset = validateLastResetFile()
 ? loadLastReset() 
 : 'Unknown';
 
+console.log(`lastReset: ${Date(lastReset)}`);
+
 let status = '';
 let statusCounter = 0;
 

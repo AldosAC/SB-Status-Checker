@@ -6,7 +6,7 @@ import { url } from '../config.js';
 const ServerStatus = (props) => {
   const [ serverStatus, setServerStatus ] = useState({});
   const { status, lastReset } = serverStatus;
-  const lastResetString = lastReset === 'Unknown' ? '' : new Date(lastReset).toLocaleString();
+  const lastResetString = lastReset === 'Unknown' ? '' : new Date(Number(lastReset)).toLocaleString();
   let statusIndicator = '';
   let lastResetIndicator = '';
 
@@ -28,11 +28,11 @@ const ServerStatus = (props) => {
     statusIndicator = (<ServerOffline>Offline</ServerOffline>)
   }
 
-  if (lastReset.length > 0) {
+  if (lastReset && lastReset.length > 0) {
     lastResetIndicator = (
-      <LastResetContainer>
-        Server last come online at {lastResetString}
-      </LastResetContainer>
+      <LastResetContents>
+        Server last come online {lastResetString}
+      </LastResetContents>
     )
   }
 
@@ -43,8 +43,10 @@ const ServerStatus = (props) => {
       </Header>
       <IndicatorContainer>
         {statusIndicator}
-        {}
       </IndicatorContainer>
+      <LastResetContainer>
+        {lastResetIndicator}
+      </LastResetContainer>
     </StatusContainer>
   )
 }
@@ -61,6 +63,7 @@ const Header = styled.div`
 `;
 const IndicatorContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 300px;
@@ -76,10 +79,16 @@ const ServerOffline = styled.div`
   text-align: center;
   font-size: 120px;
 `;
-const LastResetContainer = styled.div`
-  margin-top 10px;
-  font-size: 32px;
+const LastResetContents = styled.div`
+  font-size: 24px;
   text-align: center;
+`;
+const LastResetContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 0;
 `;
 
 export default ServerStatus;
