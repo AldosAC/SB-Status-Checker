@@ -5,11 +5,14 @@ const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
 const { saveLastReset } = require('../utils/saveLastReset.js');
 const { loadLastReset } = require('../utils/loadLastReset.js');
+const { validateLastResetFile } = require('../utils/validateLastResetFile.js');
 
 const serverURL = 'http://162.62.80.186:4000';
 
 const requestURL = serverURL;
-let lastReset = loadLastReset();
+let lastReset = validateLastResetFile() 
+? loadLastReset() 
+: 'Unknown';
 
 let status = '';
 let statusCounter = 0;

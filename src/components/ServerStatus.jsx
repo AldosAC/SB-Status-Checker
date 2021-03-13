@@ -6,7 +6,7 @@ import { url } from '../config.js';
 const ServerStatus = (props) => {
   const [ serverStatus, setServerStatus ] = useState({});
   const { status, lastReset } = serverStatus;
-  const lastResetString = new Date(lastReset).toLocaleString();
+  const lastResetString = lastReset === 'Unknown' ? '' : new Date(lastReset).toLocaleString();
   let statusIndicator = '';
   let lastResetIndicator = '';
 
