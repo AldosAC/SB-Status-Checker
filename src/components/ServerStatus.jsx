@@ -4,16 +4,15 @@ import axios from 'axios';
 import { url } from '../config.js';
 
 const ServerStatus = (props) => {
-  const [ status, setStatus ] = useState('');
+  const [ serverStatus, setServerStatus ] = useState({});
+  const { status, lastReset } = serverStatus;
+  const lastResetString = new Date(lastReset).toLocaleString();
   let statusIndicator = '';
-
-  const updateStatus = (status) => {
-    setStatus(status);
-  }
+  let lastResetIndicator = '';
 
   const getStatus = () => {
     axios.get(`${url}/api/status`)
-      .then(({ data }) => updateStatus(data))
+      .then(({ data }) => setServerStatus(data))
       .catch((err) => console.log(err));
 
     setTimeout(getStatus, 5000)
@@ -29,6 +28,14 @@ const ServerStatus = (props) => {
     statusIndicator = (<ServerOffline>Offline</ServerOffline>)
   }
 
+  if (lastReset.length > 0) {
+    lastResetIndicator = (
+      <LastResetContainer>
+        Server last come online at {lastResetString}
+      </LastResetContainer>
+    )
+  }
+
   return (
     <StatusContainer>
       <Header>
@@ -36,6 +43,7 @@ const ServerStatus = (props) => {
       </Header>
       <IndicatorContainer>
         {statusIndicator}
+        {}
       </IndicatorContainer>
     </StatusContainer>
   )
@@ -67,6 +75,11 @@ const ServerOffline = styled.div`
   color: red;
   text-align: center;
   font-size: 120px;
+`;
+const LastResetContainer = style.div`
+  margin-top 10px;
+  font-size: 32px;
+  text-align: center;
 `;
 
 export default ServerStatus;
