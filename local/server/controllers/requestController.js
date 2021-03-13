@@ -3,7 +3,8 @@ const { testURL } = require('../../../config.js');
 const { sendAlert } = require('./messageController.js');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
-const { saveLastReset, loadLastReset } = require('../utils/saveLastReset.js');
+const { saveLastReset } = require('../utils/saveLastReset.js');
+const { loadLastReset } = require('../utils/loadLastReset.js');
 
 const serverURL = 'http://162.62.80.186:4000';
 
