@@ -76,7 +76,7 @@ const ServerOffline = styled.div`
   text-align: center;
   font-size: 120px;
 `;
-const LastResetContainer = style.div`
+const LastResetContainer = styled.div`
   margin-top 10px;
   font-size: 32px;
   text-align: center;
