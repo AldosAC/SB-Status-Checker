@@ -3,10 +3,12 @@ const { testURL } = require('../../../config.js');
 const { sendAlert } = require('./messageController.js');
 const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
+const { saveLastReset, loadLastReset } = require('../utils/saveLastReset.js');
 
 const serverURL = 'http://162.62.80.186:4000';
 
 const requestURL = serverURL;
+let lastReset = loadLastReset();
 
 let status = '';
 let statusCounter = 0;
@@ -14,6 +16,11 @@ let statusCounter = 0;
 const toggleStatus = (status, currStatus) => {
   if (status !== currStatus && currStatus !== '') {
     let message = `${timeStamp()} - Status changed: ${status}`
+
+    if (status === 'ONLINE') {
+      saveLastReset(status);
+      lastReset = Date.now();
+    }
 
     log(message);
     console.log(message);
@@ -65,7 +72,7 @@ const queueRequest = (timeout) => {
 }
 
 const getStatus = () => {
-  return status;
+  return { status, lastReset };
 }
 
 queueRequest(0);
