@@ -6,9 +6,10 @@
 
 ## CONFIG ##
 /config.js
+lastReset.txt
 
 ## BUNDLE ##
-/public/bundle.js
+bundle.js
 
 ## PEM ##
 *.pem
