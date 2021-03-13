@@ -10,9 +10,6 @@ const ServerStatus = (props) => {
   let statusIndicator = '';
   let lastResetIndicator = '';
 
-  console.log(`lastReset: ${lastReset}`);
-  console.log(`lastResetString: ${lastResetString}`);
-
   const getStatus = () => {
     axios.get(`${url}/api/status`)
       .then(({ data }) => setServerStatus(data))
@@ -31,10 +28,10 @@ const ServerStatus = (props) => {
     statusIndicator = (<ServerOffline>Offline</ServerOffline>)
   }
 
-  if (lastReset && lastReset.length > 0) {
+  if (lastResetString.length > 0) {
     lastResetIndicator = (
       <LastResetContents>
-        Server last come online {lastResetString}
+        Server last came online {lastResetString}
       </LastResetContents>
     )
   }
