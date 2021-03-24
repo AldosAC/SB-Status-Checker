@@ -63,10 +63,12 @@ const queueRequest = (timeout) => {
   setTimeout(() => {
     axios.get(requestURL)
       .then((response) => {
+        console.log(`Then Response: ${err.message}`)
         serverIsOnline();
       })
       .catch((err) => {
         err = err.message.split(' ')[0];
+        console.log(`Catch Response: ${err.message}`)
         
         if (err === 'Parse') {
           serverIsOnline();
