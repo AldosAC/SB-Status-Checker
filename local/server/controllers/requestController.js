@@ -67,8 +67,8 @@ const queueRequest = (timeout) => {
         serverIsOnline();
       })
       .catch((err) => {
-        err = err.message.split(' ')[0];
         console.log(`Catch Response: ${err.message}`)
+        err = err.message.split(' ')[0];
         
         if (err === 'Parse') {
           serverIsOnline();
