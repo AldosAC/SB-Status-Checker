@@ -51,7 +51,7 @@ const statusCheck = (status, counter) => {
 const serverIsOnline = () => {
   status = toggleStatus('ONLINE', status);
   statusCounter = statusCheck(status, statusCounter);
-  queueRequest((Math.random() * 80 - 400) * 1000);
+  queueRequest((Math.random() * 80 - 40) * 1000);
 }
 
 const serverIsOffline = () => {
