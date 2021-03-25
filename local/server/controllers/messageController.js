@@ -4,6 +4,8 @@ const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
 const { getRecipients } = require('./recipientsController.js');
 
+const testMode = true;
+
 const sendAlert = (status) => {
   let subject = `SB Update: Servers are ${status}`;
   let text = `
@@ -14,10 +16,13 @@ const sendAlert = (status) => {
   To unsubscribe, visit https://sbstatus.joelcarpenter.net
   `
 
-  getRecipients()
+  if(testMode) {
+    console.log(`Test mode, no messages sent`);
+  } else {
+    getRecipients()
     .then((recipients) => {
       let messagePool = [];
-    
+      
       for (let i = 0; i < recipients.length; i++) {
         messagePool.push(send({
           to: recipients[i].email,
@@ -25,24 +30,25 @@ const sendAlert = (status) => {
           text
         }));
       }
-    
+      
       Promise.all(messagePool)
-        .then(() => {
-          console.log(`${timeStamp()} - Update sent: ${status}`)
-        })
-        .catch((err) => {
-          let message = `${timeStamp()} - Update notification fail: ${err}`;
-          
-          log(message);
-          console.log(message)
-        })
+      .then(() => {
+        console.log(`${timeStamp()} - Update sent: ${status}`)
+      })
+      .catch((err) => {
+        let message = `${timeStamp()} - Update notification fail: ${err}`;
+        
+        log(message);
+        console.log(message)
+      })
     })
     .catch((err) => {
       let message = `${timeStamp()} - Update notification fail: ${err}`;
-          
+      
       log(message);
       console.log(message)
     })
+  }
 }
 
 const sendRegistrationConfirmation = (email) => {
