@@ -7,7 +7,7 @@ const { saveLastReset } = require('../utils/saveLastReset.js');
 const { loadLastReset } = require('../utils/loadLastReset.js');
 const { validateLastResetFile } = require('../utils/validateLastResetFile.js');
 
-const serverURL = 'http://162.62.80.186';
+const serverURL = '162.62.80.186';
 
 const requestURL = serverURL;
 const requestPort = 4000;
@@ -67,6 +67,7 @@ const queueRequest = (timeout) => {
     connection.on('connect', () => {
       console.log(`Server is online.`);
       serverIsOnline();
+      connection.destroy();
     });
     connection.on('error', (err) => {
       console.log(`Error connecting: ${err}`);
