@@ -65,16 +65,13 @@ const queueRequest = (timeout) => {
     const connection = new net.Socket();
     connection.setTimeout(5000);
     connection.on('connect', () => {
-      console.log(`Server is online.`);
       serverIsOnline();
       connection.destroy();
     });
     connection.on('error', (err) => {
-      console.log(`Error connecting: ${err}`);
-      serverIsOnline();
+      serverIsOffline();
     })
     connection.on('timeout', (err) => {
-      console.log(`Server is offline: ${err}`);
       serverIsOffline();
     })
     connection.connect({ host: requestURL, port: requestPort });

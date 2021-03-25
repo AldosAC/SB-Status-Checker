@@ -4,7 +4,7 @@ const { log } = require('./logController.js')
 const { timeStamp } = require('../utils/timeStamp.js');
 const { getRecipients } = require('./recipientsController.js');
 
-const testMode = true;
+const testMode = false;
 
 const sendAlert = (status) => {
   let subject = `SB Update: Servers are ${status}`;
