@@ -1,4 +1,4 @@
-const axios = require('axios').create({ timeout: 5000, validateStatus: () => true });
+const net = require('net');
 const { testURL } = require('../../../config.js');
 const { sendAlert } = require('./messageController.js');
 const { log } = require('./logController.js')
@@ -7,9 +7,10 @@ const { saveLastReset } = require('../utils/saveLastReset.js');
 const { loadLastReset } = require('../utils/loadLastReset.js');
 const { validateLastResetFile } = require('../utils/validateLastResetFile.js');
 
-const serverURL = 'http://162.62.80.186:4000';
+const serverURL = '162.62.80.186';
 
 const requestURL = serverURL;
+const requestPort = 4000;
 let lastReset = validateLastResetFile() 
 ? loadLastReset() 
 : 'Unknown';
@@ -61,21 +62,20 @@ const serverIsOffline = () => {
 
 const queueRequest = (timeout) => {
   setTimeout(() => {
-    axios.get(requestURL)
-      .then((response) => {
-        console.log(`Then Response: ${err.message}`)
-        serverIsOnline();
-      })
-      .catch((err) => {
-        console.log(`Catch Response: ${err.message}`)
-        err = err.message.split(' ')[0];
-        
-        if (err === 'Parse') {
-          serverIsOnline();
-        } else {
-          serverIsOffline();
-        }
-      })
+    const connection = new net.Socket();
+    connection.setTimeout(5000);
+    connection.on('connect', () => {
+      serverIsOnline();
+      connection.destroy();
+    });
+    connection.on('error', (err) => {
+      serverIsOffline();
+    })
+    connection.on('timeout', (err) => {
+      serverIsOffline();
+    })
+    connection.connect({ host: requestURL, port: requestPort });
+
   }, timeout)
 }
 
