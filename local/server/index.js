@@ -11,7 +11,8 @@ const PORT = 3658;
 
 const corsOptions = {
   origin: [
-    'https://sbstatus.joelcarpenter.net'
+    'https://sbstatus.joelcarpenter.net',
+    'http://localhost:8080'
   ],
   methods: [
     'GET',
@@ -20,7 +21,7 @@ const corsOptions = {
   ]
 }
 
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(cors(corsOptions));
 
 app.get(`/api/status`, (req, res) => {
