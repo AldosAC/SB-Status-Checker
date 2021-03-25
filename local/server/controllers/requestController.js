@@ -37,7 +37,7 @@ const toggleStatus = (status, currStatus) => {
 }
 
 const statusCheck = (status, counter) => {
-  if (counter >= 40) {
+  if (counter >= 0) {
     let message = `${timeStamp()} - Status check: ${status}`
 
     log(message);
@@ -51,13 +51,13 @@ const statusCheck = (status, counter) => {
 const serverIsOnline = () => {
   status = toggleStatus('ONLINE', status);
   statusCounter = statusCheck(status, statusCounter);
-  queueRequest(30000);
+  queueRequest((Math.random() * 80 - 400) * 1000);
 }
 
 const serverIsOffline = () => {
   status = toggleStatus(`OFFLINE`, status);
   statusCounter = statusCheck(status, statusCounter);
-  queueRequest(5000);
+  queueRequest((Math.random() * 12.5 - 7.5) * 1000);
 }
 
 const queueRequest = (timeout) => {
