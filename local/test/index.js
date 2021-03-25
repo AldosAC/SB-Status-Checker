@@ -4,7 +4,7 @@ const express = require(`express`);
 const morgan = require(`morgan`);
 
 const app = express();
-const PORT = 3001;
+const PORT = 4000;
 
 app.use(morgan(`dev`));
 
