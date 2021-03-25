@@ -51,13 +51,13 @@ const statusCheck = (status, counter) => {
 const serverIsOnline = () => {
   status = toggleStatus('ONLINE', status);
   statusCounter = statusCheck(status, statusCounter);
-  queueRequest((Math.random() * 80 - 40) * 1000);
+  queueRequest((Math.random() * (80 - 40) + 40) * 1000);
 }
 
 const serverIsOffline = () => {
   status = toggleStatus(`OFFLINE`, status);
   statusCounter = statusCheck(status, statusCounter);
-  queueRequest((Math.random() * 12.5 - 7.5) * 1000);
+  queueRequest((Math.random() * (12.5 - 7.5) + 7.5) * 1000);
 }
 
 const queueRequest = (timeout) => {
