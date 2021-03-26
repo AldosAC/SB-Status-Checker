@@ -6,6 +6,7 @@ const { timeStamp } = require('../utils/timeStamp.js');
 const { saveLastReset } = require('../utils/saveLastReset.js');
 const { loadLastReset } = require('../utils/loadLastReset.js');
 const { validateLastResetFile } = require('../utils/validateLastResetFile.js');
+const { randomData } = require('../utils/randomData.js');
 
 const serverURL = '162.62.80.186';
 
@@ -66,6 +67,7 @@ const queueRequest = (timeout) => {
     connection.setTimeout(5000);
     connection.on('connect', () => {
       serverIsOnline();
+      connection.send(randomData());
       connection.destroy();
     });
     connection.on('error', (err) => {
