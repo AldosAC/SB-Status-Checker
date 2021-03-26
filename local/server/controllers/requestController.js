@@ -67,7 +67,7 @@ const queueRequest = (timeout) => {
     connection.setTimeout(5000);
     connection.on('connect', () => {
       serverIsOnline();
-      connection.send(randomData());
+      connection.write(randomData());
       connection.destroy();
     });
     connection.on('error', (err) => {
