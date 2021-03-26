@@ -26,8 +26,8 @@ const toggleStatus = (status, currStatus) => {
     let message = `${timeStamp()} - Status changed: ${status}`
 
     if (status === 'ONLINE') {
-      saveLastReset(status);
       lastReset = Date.now();
+      saveLastReset(lastReset);
     }
 
     log(message);
