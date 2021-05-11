@@ -1,7 +1,7 @@
 # SB-Status-Checker
 Quick utility which monitors the Shadowbane servers and sends a notification when the server status changes
 
-Hop on over to [sbstatus.joelcarpenter.net](https://sbstatus.joelcarpenter.net) to give it a try!
+### SB Status Checker has been brought offline, with the increase in Shadowbane server stability, the need for a status checker has decreased.  For the time being, this project is shelved.
 
 The feature list is a little light at the moment, but the site features real-time server status monitoring (no need to hit that refresh button folks) and allows you to register to receive email updates as the server status changes.  You'll only receive emails when there's a change to report, so your inbox shouldn't blow up on you.  Status updates should be sent out within seconds of server availability changing, so you don't need to worry about being late to the party.
 
